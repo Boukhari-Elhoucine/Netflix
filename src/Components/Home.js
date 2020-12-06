@@ -17,7 +17,10 @@ function Home() {
     <Container>
       <Hero>
         <Header>
-          <Logo src="https://www.freepnglogos.com/uploads/red-netflix-logo-text-png-3.png" />
+          <Logo
+            src="https://www.freepnglogos.com/uploads/red-netflix-logo-text-png-3.png"
+            alt="netflix"
+          />
           <Link to="/login">
             <SignIn>Sign in</SignIn>
           </Link>
