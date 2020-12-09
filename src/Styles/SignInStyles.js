@@ -23,10 +23,11 @@ export const Container = styled.div`
 export const FormContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
+  width: 30vw;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 2rem 1.2rem;
+  padding: 4rem 3rem;
   border-radius: 5px;
 `;
 export const Submit = styled.button`
@@ -35,8 +36,9 @@ export const Submit = styled.button`
   border-radius: 5px;
   color: #fff;
   font-size: 1em;
+  font-weight: bold;
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.8rem 0;
   outline: none;
   cursor: pointer;
   margin-top: 10px;
@@ -45,4 +47,5 @@ export const H2 = styled.h2`
   color: #fff;
   font-size: 2em;
   font-weight: bold;
+  margin-bottom: 1.5rem;
 `;

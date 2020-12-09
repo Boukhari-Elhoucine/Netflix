@@ -81,4 +81,20 @@ export const Start = styled.button`
   border-radius: 2px;
   cursor: pointer;
 `;
-export const Section = styled.section``;
+export const Section = styled.section`
+  margin-top: 1rem;
+  background-color: #000;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const SectionContent = styled.div`
+  width: 80%;
+  display: flex;
+`;
+export const Tv = styled.img`
+  object-fit: contain;
+  height: 250px;
+  flex: 1;
+`;

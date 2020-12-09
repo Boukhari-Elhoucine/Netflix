@@ -10,6 +10,9 @@ import {
   H3,
   Banner,
   Start,
+  Section,
+  SectionContent,
+  Tv,
 } from "../Styles/HomeStyles";
 import { Link } from "react-router-dom";
 function Home() {
@@ -37,6 +40,18 @@ function Home() {
           </Link>
         </Banner>
       </Hero>
+      <Section>
+        <SectionContent>
+          <div style={{ flex: 1 }}>
+            <H1>Enjoy on your TV.</H1>
+            <H2>
+              Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV,
+              Blu-ray players, and more.
+            </H2>
+          </div>
+          <Tv src="https://www.trustedreviews.com/wp-content/uploads/sites/54/2019/07/Netflix-English-user-interface.jpg" />
+        </SectionContent>
+      </Section>
     </Container>
   );
 }
