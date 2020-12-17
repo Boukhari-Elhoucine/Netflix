@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, useField } from "formik";
 import { TextField } from "formik-material-ui";
 import {
@@ -19,7 +19,16 @@ import {
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import * as Yup from "yup";
+import axios from "axios";
 function SignUpStepper() {
+  const [plans, setPlans] = useState([]);
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get("http://localhost:5000/plan");
+      setPlans(response.data);
+    }
+    getData();
+  }, []);
   return (
     <FormikStepper initialValues={{ email: "", password: "", plan: "" }}>
       <FormikStep
@@ -56,9 +65,27 @@ function SignUpStepper() {
           plan: Yup.string().required(),
         })}
       >
-        <MyRadio label="Basic" name="plan" value="basic" type="radio" />
-        <MyRadio label="Standard" name="plan" value="standard" type="radio" />
-        <MyRadio label="Premium" name="plan" value="premium" type="radio" />
+        <MyRadio
+          data={plans.length && plans[1]}
+          label="Basic"
+          name="plan"
+          value="basic"
+          type="radio"
+        />
+        <MyRadio
+          data={plans.length && plans[0]}
+          label="Standard"
+          name="plan"
+          value="standard"
+          type="radio"
+        />
+        <MyRadio
+          data={plans.length && plans[2]}
+          label="Premium"
+          name="plan"
+          value="premium"
+          type="radio"
+        />
       </FormikStep>
     </FormikStepper>
   );
@@ -72,10 +99,10 @@ export function MyRadio({ label, checked, ...props }) {
         <Span>
           {label}
           <Desc>
-            <h4>Price</h4>
-            <h4>Video Quality</h4>
-            <h4>Resolution</h4>
-            <h4>Screens</h4>
+            <h4>Price:{props.data.price}</h4>
+            <h4>Video Quality:{props.data.quality}</h4>
+            <h4>Resolution:{props.data.resolution}</h4>
+            <h4>Screens{props.data.screen}</h4>
           </Desc>
         </Span>
       </Label>
@@ -96,10 +123,9 @@ export function FormikStepper({ children, ...props }) {
         validationSchema={current.props.validationSchema}
         onSubmit={async (values) => {
           if (step === childrenArray.length - 1) {
-            await props.onSubmit(values);
+            console.log(values);
           } else {
             setStep((step) => step + 1);
-            console.log(values);
           }
         }}
       >

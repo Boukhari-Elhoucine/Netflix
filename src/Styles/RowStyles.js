@@ -13,15 +13,6 @@ export const Posters = styled.div`
     display: none;
   }
 `;
-export const Poster = styled.img`
-  height: 250px;
-  padding: 0.5rem;
-  object-fit: contain;
-  transition: all 200ms ease;
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
 export const Label = styled.h2`
   color: #fff;
 `;

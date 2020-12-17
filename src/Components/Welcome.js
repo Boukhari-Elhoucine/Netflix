@@ -26,14 +26,18 @@ function Welcome() {
     }
     getMovies();
   }, []);
-  const changeNavBar = () => {
-    if (window.scrollY > 80) {
-      setActive(true);
-    } else {
-      setActive(false);
-    }
-  };
-  window.addEventListener("scroll", changeNavBar);
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 80) {
+        setActive(true);
+      } else {
+        setActive(false);
+      }
+    });
+    return () => {
+      window.removeEventListener("scroll");
+    };
+  }, []);
   return (
     <Container>
       <Header backgroundImage={movie?.backdrop_path}>
@@ -60,7 +64,7 @@ function Welcome() {
           <Play>Play</Play>
         </MovieContainer>
       </Header>
-      <Row url={requests.trending} label="Trending" />
+      <Row url={requests.trending} movies label="Trending" />
       <Row url={requests.netflixOriginals} label="Netflix Original" />
       <Row url={requests.topRated} label="Top Rated" />
       <Row url={requests.action} label="Action" />

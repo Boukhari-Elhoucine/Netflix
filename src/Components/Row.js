@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Container, Poster, Label, Posters } from "../Styles/RowStyles";
+import { Container, Label, Posters } from "../Styles/RowStyles";
+import Poster from "./Poster";
 import axios from "../api/axios";
 function Row({ url, label }) {
   const [movies, setMovies] = useState([]);
-
   useEffect(() => {
     async function getMovies() {
       const response = await axios.get(url);
@@ -16,14 +16,10 @@ function Row({ url, label }) {
       <Label>{label}</Label>
       <Posters>
         {movies?.map((movie) => (
-          <Poster
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-          />
+          <Poster key={movie.id} movie={movie} />
         ))}
       </Posters>
     </Container>
   );
 }
-
 export default React.memo(Row);
