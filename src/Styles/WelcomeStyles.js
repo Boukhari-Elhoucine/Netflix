@@ -1,18 +1,27 @@
 import styled from "styled-components";
-
+import { animated } from "react-spring";
 export const Container = styled.div`
   background-color: #000;
   min-height: 100vh;
 `;
 export const Header = styled.div`
   position: relative;
-  height: 70vh;
+  height: 90vh;
   background-image: ${(props) =>
     props.backgroundImage &&
     `url(https://image.tmdb.org/t/p/original/${props.backgroundImage})`};
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 300px;
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0));
+  }
 `;
 export const Menu = styled.div`
   position: fixed;
@@ -32,7 +41,22 @@ export const Menu = styled.div`
   align-items: center;
   z-index: 99;
 `;
-export const Right = styled.div``;
+export const Right = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const Search = styled.form`
+  display: flex;
+  margin-right: 0.5rem;
+`;
+export const SearchField = styled(animated.input)`
+  border: 1px solid #fff;
+  background-color: transparent;
+  outline: none;
+  margin-left: 0.3rem;
+  border-radius: 5px;
+  padding: 0.3rem;
+`;
 export const Left = styled.div`
   display: flex;
   align-items: center;
@@ -57,6 +81,7 @@ export const MovieContainer = styled.div`
   top: 50%;
   left: 2%;
   transform: translateY(-50%);
+  z-index: 2;
 `;
 export const Play = styled.button`
   background-color: #aaa;
@@ -66,8 +91,26 @@ export const Play = styled.button`
   font-weight: bold;
   outline: none;
   cursor: pointer;
-  transition: 200ms ease;
+  transition: all 500ms ease;
   &:hover {
-    background-color: #777;
+    background-color: #e50914;
+    color: #fff;
+  }
+`;
+export const List = styled(animated.ul)`
+  list-style: none;
+  background-color: #000;
+  position: absolute;
+  right: 2rem;
+  top: 3.1rem;
+  border-radius: 5px;
+`;
+export const ListItem = styled.li`
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  transition: background 200ms ease;
+  &:hover {
+    color: #e50914;
   }
 `;

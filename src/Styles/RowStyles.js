@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  display: block;
   padding: 1rem;
 `;
 export const Posters = styled.div`

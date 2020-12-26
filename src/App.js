@@ -5,19 +5,25 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import Welcome from "./Components/Welcome";
-function App() {
+import AuthRoute from "./Components/authRoute";
+import { connect } from "react-redux";
+function App({ authenticated }) {
   return (
     <div className="App">
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={SignIn} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/home" component={Welcome} />
+          <Route path="/login" component={SignIn} />
+          <Route path="/signup" component={SignUp} />
+          <AuthRoute auth={authenticated} path="/home" component={Welcome} />
         </Switch>
       </Router>
     </div>
   );
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.auth.authenticated,
+  };
+};
+export default connect(mapStateToProps)(App);

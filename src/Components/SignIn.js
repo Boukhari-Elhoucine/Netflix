@@ -8,8 +8,12 @@ import { Link } from "react-router-dom";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { formTheme, useStyles } from "../Styles/Theme";
-function SignIn() {
+import { connect } from "react-redux";
+import { Login } from "../store/actions/authActions";
+import { useHistory } from "react-router-dom";
+function SignIn({ SignIn }) {
   const classes = useStyles();
+  const history = useHistory();
   const Schema = Yup.object({
     email: Yup.string().email().required(),
     password: Yup.string().required(),
@@ -28,6 +32,9 @@ function SignIn() {
           <Formik
             initialValues={{ email: "", password: "", remember: false }}
             validationSchema={Schema}
+            onSubmit={async (values) => {
+              return await SignIn(values, history);
+            }}
           >
             <Form>
               <Field
@@ -46,7 +53,7 @@ function SignIn() {
                 className={classes.root}
               />
               <MyCheckBox />
-              <Submit>Sign In</Submit>
+              <Submit type="submit">Sign In</Submit>
             </Form>
           </Formik>
         </FormContainer>
@@ -58,4 +65,9 @@ function SignIn() {
 export function MyCheckBox() {
   return <FormControlLabel control={<Checkbox />} label="Remember me" />;
 }
-export default SignIn;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    SignIn: (creds, history) => dispatch(Login(creds, history)),
+  };
+};
+export default connect(null, mapDispatchToProps)(SignIn);

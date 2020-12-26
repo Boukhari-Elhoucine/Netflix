@@ -9,9 +9,12 @@ export const Section = styled.section`
 `;
 export const FormContainer = styled.div`
   width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export const StepperContainer = styled.div`
-  width: 40%;
+  width: 400px;
   margin: 0 auto;
 `;
 export const Label = styled.label`
@@ -39,9 +42,18 @@ export const Span = styled.span`
   pointer-events: none;
 `;
 export const Buttons = styled.div`
-  width: 40%;
+  width: 100%;
   margin: 0 auto;
 `;
+export const CardContainer = styled.div`
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 18px 14px;
+  &:hover {
+    border: 1px solid #555;
+  }
+`;
+
 export const formTheme = createMuiTheme({
   palette: {
     primary: {

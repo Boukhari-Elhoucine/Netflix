@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, PosterImage } from "../Styles/PosterStyle";
 function Poster({ movie }) {
-  const [details, setDetails] = useState(false);
+  const [details, setDetails] = useState(true);
   return (
     <Container>
       <PosterImage
