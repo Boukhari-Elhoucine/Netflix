@@ -25,10 +25,15 @@ import { connect } from "react-redux";
 import { Logout } from "../store/actions/authActions";
 import { useHistory } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
-function Welcome({ Signout }) {
+import { Link } from "react-router-dom";
+import { ActiveProvider } from "./ActiveContext";
+import { SearchMovies } from "../store/actions/searchActions";
+import Result from "./Result";
+function Welcome({ Signout, getResults, searchResult }) {
   const [movie, setMovie] = useState(null);
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const [searchActive, setSearchActive] = useState(false);
   const history = useHistory();
   const Animation = useSpring({
@@ -76,12 +81,22 @@ function Welcome({ Signout }) {
             </Nav>
           </Left>
           <Right>
-            <Search>
+            <Search
+              onSubmit={(event) => {
+                event.preventDefault();
+                getResults(searchValue);
+              }}
+            >
               <SearchIcon
                 style={{ color: "#e50914", cursor: "pointer" }}
                 onClick={() => setSearchActive((prev) => !prev)}
               />
-              <SearchField placeholder="search..." style={inputAnimation} />
+              <SearchField
+                placeholder="search..."
+                style={inputAnimation}
+                value={searchValue}
+                onChange={(event) => setSearchValue(event.target.value)}
+              />
             </Search>
             <Avatar
               variant="square"
@@ -90,7 +105,9 @@ function Welcome({ Signout }) {
               onClick={() => setOpen((prev) => !prev)}
             />
             <List style={Animation}>
-              <ListItem>Plans</ListItem>
+              <Link to="/profile" style={{ textDecoration: "none" }}>
+                <ListItem>Profile</ListItem>
+              </Link>
               <ListItem
                 onClick={() => {
                   Signout(history);
@@ -106,22 +123,30 @@ function Welcome({ Signout }) {
           <Play>Play</Play>
         </MovieContainer>
       </Header>
-      <Row url={requests.trending} movies label="Trending" />
-      <Row url={requests.netflixOriginals} label="Netflix Original" />
-      <Row url={requests.topRated} label="Top Rated" />
-      <Row url={requests.action} label="Action" />
-      <Row url={requests.horror} label="Horror" />
-      <Row url={requests.romance} label="Romance" />
-      <Row url={requests.animation} label="Animation" />
-      <Row url={requests.comedy} label="Comedy" />
-      <Row url={requests.drama} label="Drama" />
-      <Row url={requests.sciFie} label="Science Fiction" />
+      <ActiveProvider>
+        <Row url={requests.trending} movies label="Trending" />
+        <Row url={requests.netflixOriginals} label="Netflix Original" />
+        <Row url={requests.topRated} label="Top Rated" />
+        <Row url={requests.action} label="Action" />
+        <Row url={requests.horror} label="Horror" />
+        <Row url={requests.romance} label="Romance" />
+        <Row url={requests.animation} label="Animation" />
+        <Row url={requests.comedy} label="Comedy" />
+        <Row url={requests.drama} label="Drama" />
+        <Row url={requests.sciFie} label="Science Fiction" last={true} />
+      </ActiveProvider>
     </Container>
   );
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     Signout: (history) => dispatch(Logout(history)),
+    getResults: (name) => dispatch(SearchMovies(name)),
   };
 };
-export default connect(null, mapDispatchToProps)(Welcome);
+const mapStateToProps = (state) => {
+  return {
+    searchResult: state.result.searchMovies,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

@@ -1,19 +1,13 @@
 const initialState = {
-  originals: [],
-  trending: [],
+  searchMovies: [],
 };
 
 const MoviesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_NETFLIX":
+    case "GET_MOVIES":
       return {
         ...state,
-        originals: action.payload,
-      };
-    case "GET_TRENDING":
-      return {
-        ...state,
-        trending: action.payload,
+        searchMovies: action.payload,
       };
     default:
       return state;

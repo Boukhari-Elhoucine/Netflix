@@ -7,6 +7,7 @@ export const SignUp = (stripe, elements, creds, history) => {
     if (lastStatus === "requires_action") {
       const client_secret = localStorage.getItem("client_secret");
       const customer_id = localStorage.getItem("customer_id");
+      const subscription_id = localStorage.getItem("subscription_id");
       stripe
         .confirmCardPayment(client_secret, {
           payment_method: {
@@ -21,9 +22,11 @@ export const SignUp = (stripe, elements, creds, history) => {
           localStorage.setItem("client_secret", "");
           const res = await axios.post("http://localhost:5000/signup", {
             customer_id,
+            subscription_id,
             ...creds,
           });
           localStorage.setItem("customer_id", "");
+          localStorage.setItem("subscription_id", "");
           const { user } = res.data;
           dispatch({ type: "CREATED", payload: user });
           return history.push("/home");
@@ -42,7 +45,12 @@ export const SignUp = (stripe, elements, creds, history) => {
           payment_method: result.paymentMethod.id,
           ...creds,
         });
-        const { status, client_secret, customer_id } = res.data;
+        const {
+          status,
+          client_secret,
+          customer_id,
+          subscription_id,
+        } = res.data;
 
         if (status === "requires_action") {
           let result = await stripe.confirmCardPayment(client_secret, {
@@ -57,10 +65,12 @@ export const SignUp = (stripe, elements, creds, history) => {
             localStorage.setItem("invoiceStatus", status);
             localStorage.setItem("client_secret", client_secret);
             localStorage.setItem("customer_id", customer_id);
+            localStorage.setItem("subscription_id", subscription_id);
             return dispatch({ type: "ERR", payload: result.error });
           } else {
             const res = await axios.post("http://localhost:5000/signup", {
               customer_id,
+              subscription_id,
               ...creds,
             });
             const { user } = res.data;
@@ -70,6 +80,7 @@ export const SignUp = (stripe, elements, creds, history) => {
         } else {
           const res = await axios.post("http://localhost:5000/signup", {
             customer_id,
+            subscription_id,
             ...creds,
           });
           const { user } = res.data;
@@ -96,6 +107,7 @@ export const Login = (creds, history) => {
 };
 export const Logout = (history) => {
   return async (dispatch) => {
+    axios.defaults.withCredentials = true;
     return await axios
       .get("http://localhost:5000/logout")
       .then(() => {

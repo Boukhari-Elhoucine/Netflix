@@ -52,10 +52,14 @@ export const Search = styled.form`
 export const SearchField = styled(animated.input)`
   border: 1px solid #fff;
   background-color: transparent;
+  color: #fff;
   outline: none;
   margin-left: 0.3rem;
   border-radius: 5px;
   padding: 0.3rem;
+  &::placeholder {
+    color: white;
+  }
 `;
 export const Left = styled.div`
   display: flex;
@@ -70,10 +74,14 @@ export const Item = styled.li`
   color: white;
   margin: 0 1rem;
   cursor: pointer;
+  transition: color 300ms ease-in-out;
+  &:hover {
+    color: #e50914;
+  }
 `;
 export const Title = styled.h2`
   color: white;
-  font-size: 2em;
+  font-size: ${(props) => (props.row ? "1.5em" : "2em")};
   margin-bottom: 0.5rem;
 `;
 export const MovieContainer = styled.div`
