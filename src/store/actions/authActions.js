@@ -2,6 +2,7 @@ import axios from "axios";
 import { CardElement } from "@stripe/react-stripe-js";
 export const SignUp = (stripe, elements, creds, history) => {
   return async (dispatch) => {
+    dispatch({ type: "LOADING" });
     axios.defaults.withCredentials = true;
     const lastStatus = localStorage.getItem("invoiceStatus");
     if (lastStatus === "requires_action") {
@@ -31,7 +32,7 @@ export const SignUp = (stripe, elements, creds, history) => {
           dispatch({ type: "CREATED", payload: user });
           return history.push("/home");
         })
-        .catch((err) => dispatch({ type: "ERR", payload: err }));
+        .catch((err) => dispatch({ type: "ERR", payload: err.response.data }));
     } else {
       try {
         const result = await stripe.createPaymentMethod({
@@ -96,13 +97,16 @@ export const SignUp = (stripe, elements, creds, history) => {
 export const Login = (creds, history) => {
   return async (dispatch) => {
     axios.defaults.withCredentials = true;
+    dispatch({ type: "LOADING" });
     return await axios
       .post("http://localhost:5000/login", creds)
       .then((response) => {
         dispatch({ type: "LOGGED_IN", payload: response.data.user });
         return history.push("/home");
       })
-      .catch((err) => dispatch({ type: "ERR", payload: err }));
+      .catch((err) =>
+        dispatch({ type: "SIGN_IN_ERR", payload: err.response.data })
+      );
   };
 };
 export const Logout = (history) => {
@@ -114,6 +118,6 @@ export const Logout = (history) => {
         dispatch({ type: "LOGGED_OUT" });
         return history.push("/");
       })
-      .catch((err) => dispatch({ type: "ERR", payload: err }));
+      .catch((err) => dispatch({ type: "ERR", payload: err.response.data }));
   };
 };

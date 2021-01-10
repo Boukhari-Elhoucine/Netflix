@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { createMuiTheme } from "@material-ui/core/styles";
 export const Section = styled.section`
   border-top: 1px solid #eee;
-  height: 88vh;
+  min-height: 88vh;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -4,7 +4,11 @@ export const Container = styled.div`
   padding: 0.5rem;
   ${(props) => {
     if (props.active) {
-      return "min-height:500px;";
+      if (props.search) {
+        return "min-height:560px;";
+      } else {
+        return "min-height:500px;";
+      }
     }
   }}
 `;

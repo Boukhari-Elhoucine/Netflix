@@ -49,6 +49,7 @@ function FormikStepper({ children, ...props }) {
                 color="primary"
                 onClick={() => setStep((step) => step - 1)}
                 style={{ marginRight: "10px" }}
+                disabled={props.loading}
               >
                 Back
               </Button>
@@ -58,6 +59,7 @@ function FormikStepper({ children, ...props }) {
               type="submit"
               variant="contained"
               fullWidth={step === 0 ? true : false}
+              disabled={props.loading}
             >
               Continue
             </Button>
@@ -73,4 +75,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(SignUp(stripe, elements, creds, history)),
   };
 };
-export default connect(null, mapDispatchToProps)(FormikStepper);
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(FormikStepper);

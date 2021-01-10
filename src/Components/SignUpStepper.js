@@ -68,7 +68,7 @@ function SignUpStepper() {
         <FormikStep
           label="Choose Plan"
           validationSchema={Yup.object({
-            plan: Yup.string().required(),
+            plan: Yup.string().required("please choose a plan"),
           })}
         >
           <MyRadio

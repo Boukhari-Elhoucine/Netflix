@@ -13,7 +13,7 @@ export const Left = styled.div`
   padding: 0.5rem;
   justify-content: center;
   align-items: flex-start;
-  height: 40vh;
+  height: 46.7vh;
 `;
 export const Right = styled.div`
   flex: 1;
@@ -22,10 +22,18 @@ export const Right = styled.div`
   padding: 0.5rem;
   display: flex;
   justify-content: flex-end;
+  @media only screen and (max-width: 650px) {
+    position: absolute;
+  }
 `;
 export const Overview = styled.div`
   color: white;
   margin: 0.5rem 0;
+  @media only screen and (max-width: 650px) {
+    font-size: 0.75em;
+    position: relative;
+    z-index: 2;
+  }
 `;
 export const Play = styled.button`
   background-color: #e50914;
@@ -36,6 +44,8 @@ export const Play = styled.button`
   font-weight: bold;
   outline: none;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
 `;
 export const Backdrop = styled.img`
   display: block;

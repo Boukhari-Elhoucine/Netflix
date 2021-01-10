@@ -40,6 +40,7 @@ export const Menu = styled.div`
   justify-content: space-between;
   align-items: center;
   z-index: 99;
+  transition: all 200ms ease-out;
 `;
 export const Right = styled.div`
   display: flex;
@@ -83,6 +84,10 @@ export const Title = styled.h2`
   color: white;
   font-size: ${(props) => (props.row ? "1.5em" : "2em")};
   margin-bottom: 0.5rem;
+  @media only screen and (max-width: 650px) {
+    position: relative;
+    z-index: 2;
+  }
 `;
 export const MovieContainer = styled.div`
   position: absolute;

@@ -27,9 +27,14 @@ import { useHistory } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
 import { ActiveProvider } from "./ActiveContext";
-import { SearchMovies } from "../store/actions/searchActions";
+import {
+  SearchMovies,
+  getTrailer,
+  setSearch,
+} from "../store/actions/searchActions";
 import Result from "./Result";
-function Welcome({ Signout, getResults, searchResult }) {
+import Trailer from "./Trailer";
+function Welcome({ Signout, getResults, searchResult, trailer, SetMovies }) {
   const [movie, setMovie] = useState(null);
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
@@ -76,15 +81,16 @@ function Welcome({ Signout, getResults, searchResult }) {
               alt="netflix"
             />
             <Nav>
-              <Item>Movies</Item>
-              <Item>TV</Item>
+              <Item onClick={() => SetMovies()}>Movies</Item>
             </Nav>
           </Left>
           <Right>
             <Search
               onSubmit={(event) => {
                 event.preventDefault();
-                getResults(searchValue);
+                if (searchValue) {
+                  getResults(searchValue);
+                }
               }}
             >
               <SearchIcon
@@ -120,21 +126,30 @@ function Welcome({ Signout, getResults, searchResult }) {
         </Menu>
         <MovieContainer>
           <Title>{movie?.name || movie?.originale_name}</Title>
-          <Play>Play</Play>
+          <Play onClick={() => trailer(movie?.name || movie?.originale_name)}>
+            Play
+          </Play>
         </MovieContainer>
       </Header>
-      <ActiveProvider>
-        <Row url={requests.trending} movies label="Trending" />
-        <Row url={requests.netflixOriginals} label="Netflix Original" />
-        <Row url={requests.topRated} label="Top Rated" />
-        <Row url={requests.action} label="Action" />
-        <Row url={requests.horror} label="Horror" />
-        <Row url={requests.romance} label="Romance" />
-        <Row url={requests.animation} label="Animation" />
-        <Row url={requests.comedy} label="Comedy" />
-        <Row url={requests.drama} label="Drama" />
-        <Row url={requests.sciFie} label="Science Fiction" last={true} />
-      </ActiveProvider>
+      {searchResult ? (
+        <ActiveProvider>
+          <Result />
+        </ActiveProvider>
+      ) : (
+        <ActiveProvider>
+          <Row url={requests.trending} movies label="Trending" />
+          <Row url={requests.netflixOriginals} label="Netflix Original" />
+          <Row url={requests.topRated} label="Top Rated" />
+          <Row url={requests.action} label="Action" />
+          <Row url={requests.horror} label="Horror" />
+          <Row url={requests.romance} label="Romance" />
+          <Row url={requests.animation} label="Animation" />
+          <Row url={requests.comedy} label="Comedy" />
+          <Row url={requests.drama} label="Drama" />
+          <Row url={requests.sciFie} label="Science Fiction" last={true} />
+        </ActiveProvider>
+      )}
+      <Trailer />
     </Container>
   );
 }
@@ -142,6 +157,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     Signout: (history) => dispatch(Logout(history)),
     getResults: (name) => dispatch(SearchMovies(name)),
+    trailer: (name) => dispatch(getTrailer(name)),
+    SetMovies: () => dispatch(setSearch()),
   };
 };
 const mapStateToProps = (state) => {

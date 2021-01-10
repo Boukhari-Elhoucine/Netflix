@@ -6,10 +6,18 @@ export const formTheme = createMuiTheme({
       root: {
         backgroundColor: "#333",
       },
+      underline: {
+        "&:after": {
+          borderBottom: "2px solid #e11",
+        },
+      },
     },
     MuiFormLabel: {
       root: {
         color: "#818c81",
+        "&$focused": {
+          color: "#e11",
+        },
       },
     },
     MuiInputBase: {

@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: block;
   padding: 1rem;
   position: relative;
-  padding-bottom: ${(props) => (props.noMargin ? "70px" : "0px")};
+  padding-bottom: ${(props) => (props.noMargin ? "65px" : "0px")};
   margin-bottom: ${(props) => (props.noMargin ? "0px" : "100px")};
   margin-top: -100px;
 `;

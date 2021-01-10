@@ -1,5 +1,6 @@
 const initalState = {
   status: null,
+  err: null,
 };
 
 const paymentReducer = (state = initalState, action) => {
@@ -17,6 +18,11 @@ const paymentReducer = (state = initalState, action) => {
         status: action.payload,
       };
     }
+    case "PAYMENT_ERR":
+      return {
+        ...state,
+        err: action.payload,
+      };
     default:
       return state;
   }

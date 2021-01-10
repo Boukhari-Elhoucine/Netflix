@@ -12,7 +12,9 @@ import { Title } from "../Styles/WelcomeStyles";
 import TextTruncate from "react-text-truncate";
 import CloseIcon from "@material-ui/icons/Close";
 import { ActiveContext } from "./ActiveContext";
-function Details({ movie }) {
+import { connect } from "react-redux";
+import { getTrailer } from "../store/actions/searchActions";
+function Details({ movie, trailer }) {
   const [active, setActive] = useContext(ActiveContext);
   return (
     <Container>
@@ -26,7 +28,13 @@ function Details({ movie }) {
             text={movie.overview}
           />
         </Overview>
-        <Play>Play</Play>
+        <Play
+          onClick={() =>
+            trailer(movie.name || movie.original_name || movie.title)
+          }
+        >
+          Play
+        </Play>
       </Left>
       <Right>
         <Backdrop
@@ -45,5 +53,9 @@ function Details({ movie }) {
     </Container>
   );
 }
-
-export default Details;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    trailer: (name) => dispatch(getTrailer(name)),
+  };
+};
+export default connect(null, mapDispatchToProps)(Details);

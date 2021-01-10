@@ -9,7 +9,7 @@ export const Cancel = (history) => {
       dispatch({ type: "LOGGED_OUT" });
       return history.push("/");
     } else {
-      return dispatch({ type: "ERR", payload: res.data });
+      return dispatch({ type: "PAYMENT_ERR", payload: res.data });
     }
   };
 };
@@ -22,7 +22,7 @@ export const Upgrade = (name) => {
       });
       return dispatch({ type: "UPGRADE", payload: res.data });
     } catch (err) {
-      return dispatch({ payload: err });
+      return dispatch({ type: "PAYMENT_ERR", payload: err.response.data });
     }
   };
 };

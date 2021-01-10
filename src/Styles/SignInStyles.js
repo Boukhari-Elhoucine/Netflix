@@ -19,16 +19,31 @@ export const Container = styled.div`
     background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
   }
+  @media only screen and (max-width: 650px) {
+    background: #000;
+  }
 `;
+export const Box = styled.div`
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const FormContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
-  position: absolute;
   width: 30vw;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   padding: 4rem 3rem;
   border-radius: 5px;
+  @media only screen and (max-width: 1024px) {
+    width: 50vw;
+  }
+  @media only screen and (max-width: 650px) {
+    background-color: #000;
+    height: 100%;
+    width: 100vw;
+  } ;
 `;
 export const Submit = styled.button`
   background-color: #e50914;
@@ -48,4 +63,17 @@ export const H2 = styled.h2`
   font-size: 2em;
   font-weight: bold;
   margin-bottom: 1.5rem;
+`;
+export const ErrorBox = styled.div`
+  border: 1px solid #e50914;
+  padding: 0.5rem 1rem;
+`;
+export const ErrorText = styled.p`
+  color: #e50914;
+`;
+export const Header = styled.div`
+  padding: 0.5rem 1rem;
+`;
+export const Text = styled.p`
+  color: white;
 `;
