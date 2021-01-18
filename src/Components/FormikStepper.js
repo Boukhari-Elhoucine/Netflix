@@ -3,7 +3,12 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { Button, Step, Stepper, StepLabel } from "@material-ui/core";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { Formik, Form } from "formik";
-import { formTheme, Buttons, StepperContainer } from "../Styles/SignUpStyles";
+import {
+  formTheme,
+  Buttons,
+  StepperContainer,
+  StepContainer,
+} from "../Styles/SignUpStyles";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SignUp } from "../store/actions/authActions";
@@ -41,7 +46,7 @@ function FormikStepper({ children, ...props }) {
               ))}
             </Stepper>
           </StepperContainer>
-          {current}
+          <StepContainer step={step}>{current}</StepContainer>
           <Buttons>
             {step > 0 ? (
               <Button

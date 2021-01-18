@@ -14,6 +14,7 @@ import {
   ListItem,
   Search,
   SearchField,
+  Triangle,
 } from "../Styles/WelcomeStyles";
 import axios from "../api/axios";
 import { requests } from "../api/index";
@@ -81,7 +82,7 @@ function Welcome({ Signout, getResults, searchResult, trailer, SetMovies }) {
               alt="netflix"
             />
             <Nav>
-              <Item onClick={() => SetMovies()}>Movies</Item>
+              <Item onClick={() => SetMovies()}>Home</Item>
             </Nav>
           </Left>
           <Right>
@@ -111,6 +112,7 @@ function Welcome({ Signout, getResults, searchResult, trailer, SetMovies }) {
               onClick={() => setOpen((prev) => !prev)}
             />
             <List style={Animation}>
+              <Triangle></Triangle>
               <Link to="/profile" style={{ textDecoration: "none" }}>
                 <ListItem>Profile</ListItem>
               </Link>

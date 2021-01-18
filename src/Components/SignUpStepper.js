@@ -21,7 +21,9 @@ function SignUpStepper() {
   const [plans, setPlans] = useState([]);
   useEffect(() => {
     async function getData() {
-      const response = await axios.get("http://localhost:5000/plan");
+      const response = await axios.get(
+        "https://netflixbackend.herokuapp.com/plan"
+      );
       setPlans(response.data);
     }
     getData();

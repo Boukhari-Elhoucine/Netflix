@@ -21,11 +21,14 @@ export const SignUp = (stripe, elements, creds, history) => {
         .then(async (result) => {
           localStorage.setItem("invoiceStatus", "");
           localStorage.setItem("client_secret", "");
-          const res = await axios.post("http://localhost:5000/signup", {
-            customer_id,
-            subscription_id,
-            ...creds,
-          });
+          const res = await axios.post(
+            "https://netflixbackend.herokuapp.com/signup",
+            {
+              customer_id,
+              subscription_id,
+              ...creds,
+            }
+          );
           localStorage.setItem("customer_id", "");
           localStorage.setItem("subscription_id", "");
           const { user } = res.data;
@@ -42,10 +45,13 @@ export const SignUp = (stripe, elements, creds, history) => {
             email: creds.email,
           },
         });
-        const res = await axios.post("http://localhost:5000/checkout", {
-          payment_method: result.paymentMethod.id,
-          ...creds,
-        });
+        const res = await axios.post(
+          "https://netflixbackend.herokuapp.com/checkout",
+          {
+            payment_method: result.paymentMethod.id,
+            ...creds,
+          }
+        );
         const {
           status,
           client_secret,
@@ -69,23 +75,34 @@ export const SignUp = (stripe, elements, creds, history) => {
             localStorage.setItem("subscription_id", subscription_id);
             return dispatch({ type: "ERR", payload: result.error });
           } else {
-            const res = await axios.post("http://localhost:5000/signup", {
-              customer_id,
-              subscription_id,
-              ...creds,
+            const res = await axios.post(
+              "https://netflixbackend.herokuapp.com/signup",
+              {
+                customer_id,
+                subscription_id,
+                ...creds,
+              }
+            );
+            dispatch({
+              type: "CREATED",
+              payload: res.data,
             });
-            const { user } = res.data;
-            dispatch({ type: "CREATED", payload: user });
             return history.push("/home");
           }
         } else {
-          const res = await axios.post("http://localhost:5000/signup", {
-            customer_id,
-            subscription_id,
-            ...creds,
+          const res = await axios.post(
+            "https://netflixbackend.herokuapp.com/signup",
+            {
+              customer_id,
+              subscription_id,
+              ...creds,
+            }
+          );
+
+          dispatch({
+            type: "CREATED",
+            payload: res.data,
           });
-          const { user } = res.data;
-          dispatch({ type: "CREATED", payload: user });
           return history.push("/home");
         }
       } catch (err) {
@@ -99,9 +116,12 @@ export const Login = (creds, history) => {
     axios.defaults.withCredentials = true;
     dispatch({ type: "LOADING" });
     return await axios
-      .post("http://localhost:5000/login", creds)
+      .post("https://netflixbackend.herokuapp.com/login", creds)
       .then((response) => {
-        dispatch({ type: "LOGGED_IN", payload: response.data.user });
+        dispatch({
+          type: "LOGGED_IN",
+          payload: response.data,
+        });
         return history.push("/home");
       })
       .catch((err) =>
@@ -113,7 +133,7 @@ export const Logout = (history) => {
   return async (dispatch) => {
     axios.defaults.withCredentials = true;
     return await axios
-      .get("http://localhost:5000/logout")
+      .get("https://netflixbackend.herokuapp.com/logout")
       .then(() => {
         dispatch({ type: "LOGGED_OUT" });
         return history.push("/");

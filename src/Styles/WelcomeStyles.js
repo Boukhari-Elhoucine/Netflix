@@ -118,6 +118,16 @@ export const List = styled(animated.ul)`
   top: 3.1rem;
   border-radius: 5px;
 `;
+export const Triangle = styled.span`
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -7px;
+  right: 10px;
+  border-bottom: 10px solid #000;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+`;
 export const ListItem = styled.li`
   color: #fff;
   padding: 0.5rem 1.2rem;

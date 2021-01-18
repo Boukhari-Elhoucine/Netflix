@@ -14,8 +14,20 @@ export const FormContainer = styled.div`
   align-items: center;
 `;
 export const StepperContainer = styled.div`
-  width: 400px;
+  max-width: 400px;
   margin: 0 auto;
+`;
+export const StepContainer = styled.div`
+  @media only screen and (max-width: 550px) {
+    ${(props) => {
+      if (props.step === 1) {
+        return `display:flex;
+        flex-direction : column;
+        align-items:center;
+      `;
+      }
+    }}
+  }
 `;
 export const Label = styled.label`
   margin: 10px;
@@ -43,7 +55,7 @@ export const Span = styled.span`
 `;
 export const Buttons = styled.div`
   width: 100%;
-  margin: 0 auto;
+  margin: 10px auto;
 `;
 export const CardContainer = styled.div`
   border: 1px solid #ccc;

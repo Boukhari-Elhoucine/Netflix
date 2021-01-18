@@ -1,6 +1,7 @@
 const initalState = {
   status: null,
   err: null,
+  loading: false,
 };
 
 const paymentReducer = (state = initalState, action) => {
@@ -16,12 +17,19 @@ const paymentReducer = (state = initalState, action) => {
       return {
         ...state,
         status: action.payload,
+        loading: false,
       };
     }
+    case "PLAN_LOADING":
+      return {
+        ...state,
+        loading: true,
+      };
     case "PAYMENT_ERR":
       return {
         ...state,
         err: action.payload,
+        loading: false,
       };
     default:
       return state;

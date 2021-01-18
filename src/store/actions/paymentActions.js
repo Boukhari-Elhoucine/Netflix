@@ -2,7 +2,8 @@ import axios from "axios";
 export const Cancel = (history) => {
   return async (dispatch) => {
     axios.defaults.withCredentials = true;
-    const res = await axios.get("http://localhost:5000/cancel");
+    dispatch({ type: "PLAN_LOADING" });
+    const res = await axios.get("https://netflixbackend.herokuapp.com/cancel");
     const { status } = res.data;
     if (status === "canceled") {
       dispatch({ type: "CANCELED", payload: status });
@@ -13,16 +14,21 @@ export const Cancel = (history) => {
     }
   };
 };
-export const Upgrade = (name) => {
+export const Upgrade = (name, history) => {
   return async (dispatch) => {
     axios.defaults.withCredentials = true;
+    dispatch({ type: "PLAN_LOADING" });
     try {
-      const res = await axios.post("http://localhost:5000/upgrade", {
-        newPlan: name,
-      });
-      return dispatch({ type: "UPGRADE", payload: res.data });
+      const res = await axios.post(
+        "https://netflixbackend.herokuapp.com/upgrade",
+        {
+          newPlan: name,
+        }
+      );
+      dispatch({ type: "UPGRADE", payload: res.data });
+      return history.push("/home");
     } catch (err) {
-      return dispatch({ type: "PAYMENT_ERR", payload: err.response.data });
+      return dispatch({ type: "PAYMENT_ERR", payload: err.message });
     }
   };
 };
